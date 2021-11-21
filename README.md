@@ -1,3 +1,4 @@
 # Djangoblog
 
-# pip install -r requirement
+
+# pip install -r requirements 
