@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Wellcome{% endblock %}</title>
+</head>
+<body>
+    
+    {% block content %}
+        {% for post in posts %}
+            <p>Published by:<a href="{% url 'accounts:profile' post.user.id %}"> {{ post.user }}</a></p><br>
+            <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a><br><br>
+            {{post.snippet}}<br><br>
+            <img src="{{ post.image.url }}" alt="" width="400" height="350"><br>
+            {{ post.body|safe }}<br><br>
+            {{ post.publish }}<hr>
+
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>

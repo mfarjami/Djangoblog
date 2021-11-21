@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.username }}| Profile{% endblock %}
+
+{% block content %}
+    {% if self_profile %}
+    <a href="{% url 'accounts:profile_edit' user.username %}">Profile Edit</a>
+    {% endif %}
+    <h4 class="text-center ">{{ user.username }}</h4>
+    <img class="rounded mx-auto d-block" src="{{ user.profile.avatar.url }}" alt="" height="150" width="150"><br><hr>
+    <h3>Bio: {{ form.bio }}</h3><br>
+    {% if self_profile %}
+    <h3>Phone Number: {{ form.phone }}</h3><br>
+    {% endif %}
+    <h3>Birthday: {{ form.birthday }}</h3>
+
+{% endblock %}
+

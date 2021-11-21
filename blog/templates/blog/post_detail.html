@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block title %} {{post.title}} {% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated and request.user.id == post.user.id or request.user.is_admin %}
+    <a class="nav-link active" href="{% url 'blog:post_update' post.id %}">Update Post </a>
+    <a class="nav-link active" href="{% url 'blog:post_delete' post.id %}">Delete Post </a>
+    {% endif %}
+    <p>Published by:<a href="{% url 'accounts:profile' post.user.id %}"> {{ post.user }}</a></p><br>
+    <h3>{{ post.title }}</h3>
+    <h2>{{ post.snippet }}</h2>
+    <img src="{{ post.image.url }}" alt="" width="400" height="350">
+    <p>{{  post.body|safe }}</p>
+    <p>{{ post.publish|date:"D d M Y" }}</p>
+
+{% endblock %}
