@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserCreationForm
 from django.forms import fields
 from .models import User, Profile
 
@@ -50,24 +51,12 @@ class UserRegistrationForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}))
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password confirmation'}))
     
-
     def clean_password2(self):
         # Check that the two password entries match
         cd = self.cleaned_data
         if cd['password'] and cd['password2'] and cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords must match.')
         return cd['password2']
-
-    # def clean_email(self):
-    #     email = self.cleaned_data['email']
-    #     if User.objects.filter(email=email).exists():
-    #         raise forms.ValidationError('Email is already registered.')
-    #     return email
-    
-    # def clean_username(self):
-    #     username = self.cleaned_data['username']
-    #     if User.objects.filter(username=username).exists():
-    #         raise forms.ValidationError('Username is already registered.')
 
     def clean(self):
         username = self.cleaned_data['username']
@@ -107,3 +96,4 @@ class PhoneLoginForm(forms.Form):
 
 class VerifyCodeForm(forms.Form):
     code = forms.IntegerField()
+
