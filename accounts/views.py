@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic import View
 from .forms import (EditProfileForm, PhoneLoginForm, UserLoginForm,
-                    UserRegistrationForm, VerifyCodeForm, )
+                    UserRegistrationForm, VerifyCodeForm)
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
@@ -12,6 +12,8 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.http import HttpResponse
 from django.core.mail import EmailMessage, send_mail
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from .models import User, Profile
 import ghasedak
 from random import randint
@@ -171,3 +173,23 @@ def verify_code(request):
     else:
         form = VerifyCodeForm()
     return render(request, 'accounts/verify_code.html', {'form':form})
+
+
+class PasswordChangeView(LoginRequiredMixin, View):
+    form_class = PasswordChangeForm
+    template_name = 'accounts/password_change.html'
+
+    def get(self, request):
+        form = self.form_class(request.user.id)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request):
+        form = self.form_class(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, 'Password changed successfully', 'success')
+            return redirect('blog:home')
+        else:
+            messages.error(request, 'Password change failed', 'danger')
+            return render(request, self.template_name, {'form':form})

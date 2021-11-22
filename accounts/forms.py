@@ -97,3 +97,9 @@ class PhoneLoginForm(forms.Form):
 class VerifyCodeForm(forms.Form):
     code = forms.IntegerField()
 
+
+# class PasswordChangeForm(forms.Form):
+#     old_password = forms.CharField(label='Old password', widget=forms.PasswordInput)
+#     new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput)
+#     new_password2 = forms.CharField(label='New password confirmation', widget=forms.PasswordInput)
+
