@@ -1,5 +1,4 @@
 from django.urls import path, include, re_path
-from django.contrib.auth.views import * 
 from . import views
 
 app_name = 'accounts'
@@ -14,6 +13,4 @@ urlpatterns = [
     path('phone_login/', views.PhoneLoginView.as_view(), name='phone_login'),
     path('verify/', views.verify_code, name='verify'),
     path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
-    path('password_change/', PasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done/',PasswordChangeDoneView.as_view(), name='password_change_done'),
 ]
