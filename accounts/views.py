@@ -194,21 +194,3 @@ class PasswordChangeView(LoginRequiredMixin, View):
             messages.error(request, 'Password change failed', 'danger')
             return render(request, self.template_name, {'form':form})
 
-
-# class PasswordResetView(View):
-#     form_class = PasswordResetForm
-#     template_name = 'accounts/password_reset_form.html'
-
-#     def get(self, request):
-#         form = self.form_class
-#         return render(request, self.template_name, {'form':form})
-
-#     def post(self, request):
-#         form = self.form_class(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Password reset link sent to your email', 'success')
-#             return redirect('blog:home')
-#         else:
-#             messages.error(request, 'Password reset failed', 'danger')
-#             return render(request, self.template_name, {'form':form})

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Share post{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Share post</button>
+    </form><br>
+    <a class="btn btn-primary" href="{% url 'blog:post_detail' post.id %}">Back</a>
+{% endblock %}

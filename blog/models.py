@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import User
+from django.urls import reverse
 from django.utils import timezone
 from ckeditor.fields import RichTextField
 
@@ -18,3 +19,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'pk': self.pk})
