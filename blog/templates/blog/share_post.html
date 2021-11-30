@@ -5,6 +5,7 @@
 
 
 {% block content %}
+    <h3>Share post: {{ post.title }}</h3><hr>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
