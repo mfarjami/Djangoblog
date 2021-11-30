@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from .forms import PostCreateForm, ContactUsForm, SharePostForm
 from django.core.mail import send_mail
-from .mixins import AuthorsAccessMixin
+from .mixins import AuthorAccessMixin
 from .models import Post
 # Create your views here.
 
@@ -21,7 +21,7 @@ class PostDetail(View):
 
 
 class PostCreate(View):
-    template_name = 'blog/post_create.html'
+    template_name = 'blog/post_create.html' # Replace with your template
     form_class = PostCreateForm
 
     def get(self, request):
@@ -38,7 +38,7 @@ class PostCreate(View):
         return render(request, self.template_name, {'form':form})
 
 
-class PostUpdate(AuthorsAccessMixin, View):
+class PostUpdate(AuthorAccessMixin, View):
     template_name = 'blog/post_update.html'
     form_class = PostCreateForm
 
@@ -57,12 +57,12 @@ class PostUpdate(AuthorsAccessMixin, View):
         return render(request, self.template_name, {'form':form})
 
 
-class PostDelete(View):
+class PostDelete(AuthorAccessMixin, View):
     def get(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
         post.delete()
         messages.success(request, 'Post deleted successfully', 'success')
-        return redirect('blog:home')
+        return redirect('blog:home') 
 
 
 class ContactUs(View):
