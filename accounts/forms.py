@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import fields
 from .models import User, Profile
 
 
@@ -58,11 +57,19 @@ class UserRegistrationForm(forms.Form):
             raise forms.ValidationError('Passwords must match.')
         return cd['password2']
 
-    def clean(self):
-        username = self.cleaned_data['username']
-        email = self.cleaned_data['email']
-        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
-            raise forms.ValidationError('Username or email is already registered.')
+    def clean_username(self):
+        # Check that the username is not already in use
+        username = self.cleaned_data.get('username')
+        qs = User.objects.filter(username=username)
+        if qs.exists():
+            raise forms.ValidationError("Username is taken.")
+
+        def clean_email(self):
+            # Check that the email is not already in use
+            email = self.cleaned_data.get('email')
+            qs = User.objects.filter(email=email)
+            if qs.exists():
+                raise forms.ValidationError("Email is taken.")
 
 
 class EditProfileForm(forms.ModelForm):
@@ -88,18 +95,13 @@ class PhoneLoginForm(forms.Form):
     phone = forms.IntegerField()
 
     def clean_phone(self):
-        phone = Profile.objects.filter(phone=self.cleaned_data['phone'])
-        if not phone.exists():
+        phone = Profile.objects.filter(phone=self.cleaned_data.get('phone'))
+        if phone.exists():
             raise forms.ValidationError('Phone is already registered.')
-        return self.cleaned_data['phone']
+        return self.cleaned_data.get('phone')
 
 
 class VerifyCodeForm(forms.Form):
     code = forms.IntegerField()
 
-
-# class PasswordChangeForm(forms.Form):
-#     old_password = forms.CharField(label='Old password', widget=forms.PasswordInput)
-#     new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput)
-#     new_password2 = forms.CharField(label='New password confirmation', widget=forms.PasswordInput)
 

@@ -3,6 +3,7 @@ from accounts.models import User
 from django.urls import reverse
 from django.utils import timezone
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 # Create your models here.
 class Post(models.Model):
@@ -25,3 +26,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', kwargs={'pk': self.pk})
+
+    def save(self, *args, **kwargs):
+        self.snippet = slugify(self.title)
+        super().save(*args, **kwargs)
