@@ -10,15 +10,19 @@
 <body>
     
     {% block content %}
-        {% for post in posts %}
+        <div class="card-body" style="display: inline-block;">
+            <div class="col-md-6">
+                {% for post in posts %}
             <p>Published by:<a href="{% url 'accounts:profile' post.user.id %}"> {{ post.user }}</a></p><br>
             <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a><br><br>
-            {{post.snippet}}<br><br>
+            {{post.snippet|truncatechars:80}}<br><br>
             <img src="{{ post.image.url }}" alt="" width="400" height="350"><br>
-            {{ post.body|safe }}<br><br>
+            {{ post.body|truncatechars:80|safe }}<br><br>
             {{ post.publish }}<hr>
 
-        {% endfor %}
+            {% endfor %}
+            </div>
+        </div>
     {% endblock %}
 </body>
 </html>

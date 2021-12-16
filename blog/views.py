@@ -1,10 +1,11 @@
+from django import forms
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
-from .forms import PostCreateForm, ContactUsForm, SharePostForm
+from .forms import PostCreateForm, ContactUsForm, SharePostForm, AddCommentForm 
 from django.core.mail import send_mail
 from .mixins import AuthorAccessMixin
-from .models import Post
+from .models import Comment, Post
 # Create your views here.
 
 
@@ -15,9 +16,36 @@ class PostList(View):
 
 
 class PostDetail(View):
+    form_class = AddCommentForm
+    template_name = 'blog/post_detail.html'
+
     def get(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
-        return render(request, 'blog/post_detail.html', {'post':post})
+        Comments = Comment.objects.filter(post=post, active=True, is_reply=False)
+        reply_form = self.form_class()
+        context={
+            'post':post,
+            'comments':Comments, 
+            'form':self.form_class,
+            'reply':reply_form,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+            messages.success(request, 'Comment sent successfully', 'success')
+            return redirect('blog:post_detail', pk)
+        else:
+            context={
+            'post':post,
+            'form':form,
+            }
+            return render(request, self.template_name, context)
 
 
 class PostCreate(View):
@@ -115,4 +143,22 @@ class SharePostView(View):
         else:
             messages.error(request, '{post.title} post was not sent to {to}', 'error')
             return render(request, self.template_name, {'form':form, 'post':post})
+            
+
+class AddReplyView(View):
+    def post(self, request, comment_id, post_id):
+        comment = get_object_or_404(Comment, id=comment_id)
+        post = get_object_or_404(Post, id=post_id)
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            new_reply = form.save(commit=False)
+            new_reply.reply = comment
+            new_reply.post = post
+            new_reply.is_reply = True
+            new_reply.save()
+            messages.success(request, 'Your reply sent successfully', 'success')
+            return redirect('blog:post_detail', post_id)
+        else:
+            messages.error(request, 'Your reply not sent', 'error')
+            return redirect('blog:post_detail', post_id)
             

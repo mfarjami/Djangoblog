@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields
-from .models import Post
+from .models import Post, Comment
 
 
 class PostCreateForm(forms.ModelForm):
@@ -22,3 +22,10 @@ class SharePostForm(forms.Form):
     name = fields.CharField(max_length=100, required=True)
     to = fields.EmailField(required=True)
     message = fields.CharField(widget=forms.Textarea, required=True)
+
+
+class AddCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('name', 'body')
+
