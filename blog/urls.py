@@ -14,5 +14,10 @@ urlpatterns = [
     path('contact_us/', views.ContactUs.as_view(), name='contact_us'),
     path('share_post/<int:post_id>/', views.SharePostView.as_view(), name='share_post'),
     path('add_reply/<int:post_id>/<int:comment_id>/', views.AddReplyView.as_view(), name='add_reply'),
+]
+
+urlpatterns += [
     path('bucket/', bucket_views.BucketHome.as_view(), name='bucket_home'),
+    path('bucket_delete/<str:key>/', bucket_views.BucketDelete.as_view(), name='bucket_delete'),
+    path('bucket_download/<str:key>/', bucket_views.BucketDownload.as_view(), name='bucket_download'),
 ]

@@ -12,7 +12,7 @@ class Post(models.Model):
     # body = models.TextField()
     body = RichTextField()
     snippet = models.CharField(max_length=300)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(default='accounts/avatar/1.jpg')
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
