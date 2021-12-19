@@ -139,6 +139,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
+
+# Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = config('EMAIL_HOST')
@@ -157,3 +159,12 @@ CELERY_RESULT_EXPIRES = timedelta(days=1)
 CELERY_TASK_ALWAYS_EAGER = False
 CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 
+
+# ARVAN CLOUD STORAGE
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = '9b30fc89-bf3d-45c8-8cba-53e64342b587'
+AWS_SECRET_ACCESS_KEY = 'f2a34a4a9188bf857044baa78ee67474b301ab436913087b0b05e9caeae13513'
+AWS_STORAGE_BUCKET_NAME = 'biria'
+AWS_SERVICE_NAME = 's3'
+AWS_S3_ENDPOINT_URL = 'https://s3.ir-thr-at1.arvanstorage.com'
+AWS_S3_FILE_OVERWRITE = False

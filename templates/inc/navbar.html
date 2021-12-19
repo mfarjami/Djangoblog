@@ -10,6 +10,9 @@
       <a class="nav-link active" href="{% url 'accounts:phone_login' %}">Login phone </a>
       <a class="nav-link active" href="{% url 'accounts:login' %}">Login </a>
       {% endif %}
+      {% if request.user.is_admin %}
+      <a class="nav-link active" href="{% url 'blog:bucket_home' %}">Bucket </a>
+      {% endif %}
       <a class="nav-link active" href="{% url 'blog:contact_us' %}">Contact Us </a>
     </div>
 </nav>

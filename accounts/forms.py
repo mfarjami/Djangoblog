@@ -80,12 +80,12 @@ class EditProfileForm(forms.ModelForm):
         fields = ('avatar', 'bio', 'phone', 'birthday')
 
 
-    def clean_phone(self):
-        phone = self.cleaned_data['phone']
-        if Profile.objects.filter(phone=phone).exists():
-            raise forms.ValidationError('Phone is already registered.')
-        return phone
-        # if not phone.isdigit() and len(phone) == 11:
+    # def clean_phone(self):
+    #     phone = self.cleaned_data['phone']
+    #     if Profile.objects.filter(phone=phone).exists():
+    #         raise forms.ValidationError('Phone is already registered.')
+    #     return phone
+        # if len(phone) == 11:
         #     return phone
         # else:
         #     raise forms.ValidationError('Phone number must be 11 digits.')

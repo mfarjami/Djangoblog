@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='accounts/avatar/', default='accounts/avatar/1.jpg')
+    avatar = models.ImageField(default='accounts/avatar/1.jpg')
     bio = models.CharField(max_length=255, blank=True, null=True)
     phone = models.PositiveIntegerField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
