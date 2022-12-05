@@ -108,9 +108,13 @@ celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+.docker
+mnesia
+rabbimq.conf
+.erlang.cookie
 
 # Environments
-# .env
+.env
 .venv
 env/
 venv/

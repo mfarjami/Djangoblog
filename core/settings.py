@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -151,7 +152,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 # celery
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost'
+CELERY_BROKER_URL= "amqp://guest:guest@rabbitmq/"
 CELERY_RESULT_BACKEND = 'rpc://'
 CELERY_RESULT_SERIALIZER = 'pickle'
 CELERY_ACCESS_CONTENT = ['json', 'pickle']
