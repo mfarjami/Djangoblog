@@ -7,10 +7,8 @@ Modules used in this project: Python, Django, Rabbitmq, Docker, Celery, Css, cke
 
 2.[Downloading and Installing Docker](https://docs.docker.com/compose/install/)
 
-3.Build the container image.
-  $ docker build -t  .
+3.Build the container image => $ docker build -t  .
   
-4. Run docker compose
-  $ docker compose up -d
+4. Run docker compose => $ docker compose up -d
   
   
