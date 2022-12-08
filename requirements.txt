@@ -42,3 +42,8 @@ celery
 
 #oauth
 social-auth-app-django
+
+# rest farmework
+djangorestframework
+djangorestframework-oauth
+djangorestframework-simplejwt

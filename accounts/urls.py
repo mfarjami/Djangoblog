@@ -1,4 +1,4 @@
-from django.urls import path, include, re_path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views 
 from . import views
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('verify/', views.verify_code, name='verify'),
     path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
     path('', include('django.contrib.auth.urls')),
+    path('api-v1/', include('accounts.api.v1.urls')),
 ]
