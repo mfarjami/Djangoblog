@@ -39,3 +39,6 @@ urllib3==1.26.7
 vine==5.0.0
 wcwidth==0.2.5
 celery
+
+#oauth
+social-auth-app-django

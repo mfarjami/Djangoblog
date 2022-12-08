@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.http import HttpResponse
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm, PasswordResetForm
 from .models import User, Profile
@@ -62,6 +62,7 @@ class UserRegisterView(View):
         if form.is_valid():
             cd = form.cleaned_data
             user = User.objects.create_user(cd['username'], cd['email'], cd['full_name'], cd['password'])
+            # user = User.objects.create_user(username= form.cleaned_data['username'], email= form.cleaned_data['email'], full_name= form.cleaned_data['full_name'], password= form.cleaned_data['password'])
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
