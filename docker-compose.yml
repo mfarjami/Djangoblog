@@ -17,6 +17,7 @@ services:
       # HTTP management UI
 
   celeryworker:
+    container_name: celeryworker
     hostname: celeryworker
     build: .
     volumes:
